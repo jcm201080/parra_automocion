@@ -25,5 +25,14 @@ with app.app_context():
         db.session.add_all([v1, v2, v3])
         db.session.commit()
 
+with app.app_context():
+    db.create_all()
+    from models import AdminUser
+    if AdminUser.query.count() == 0:
+        admin_user = AdminUser(username="admin")
+        admin_user.set_password("parra2026")  # Cambia esta contraseña
+        db.session.add(admin_user)
+        db.session.commit()
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

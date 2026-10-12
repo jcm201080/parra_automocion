@@ -1,7 +1,41 @@
-from flask import Blueprint, request, jsonify
+import os
+import uuid
+from flask import Blueprint, request, jsonify, session, current_app
+from werkzeug.utils import secure_filename
 from models import db, Vehiculo
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@api_bp.route('/upload', methods=['POST'])
+def upload_file():
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "No autorizado"}), 401
+        
+    if 'foto' not in request.files:
+        return jsonify({"error": "No se ha enviado ningún archivo"}), 400
+        
+    file = request.files['foto']
+    if file.filename == '':
+        return jsonify({"error": "Nombre de archivo vacío"}), 400
+        
+    if file and allowed_file(file.filename):
+        ext = file.filename.rsplit('.', 1)[1].lower()
+        filename = f"{uuid.uuid4().hex}.{ext}"
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
+        
+        file_path = os.path.join(upload_folder, filename)
+        file.save(file_path)
+        
+        file_url = f"/static/uploads/{filename}"
+        return jsonify({"url": file_url}), 200
+        
+    return jsonify({"error": "Formato de imagen no permitido"}), 400
 
 @api_bp.route('/vehiculos', methods=['GET'])
 def get_vehiculos():
@@ -22,6 +56,9 @@ def get_vehiculos():
 
 @api_bp.route('/vehiculos', methods=['POST'])
 def add_vehiculo():
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "No autorizado"}), 401
+        
     data = request.json
     nuevo = Vehiculo(
         marca=data['marca'],
@@ -33,6 +70,7 @@ def add_vehiculo():
         combustible=data['combustible'],
         estado=data.get('estado', 'disponible'),
         imagen_url=data.get('imagen_url', ''),
+        imagenes_galeria=data.get('imagenes_galeria', ''),
         descripcion=data.get('descripcion', '')
     )
     db.session.add(nuevo)
@@ -41,6 +79,9 @@ def add_vehiculo():
 
 @api_bp.route('/vehiculos/<int:id>', methods=['PUT'])
 def update_vehiculo(id):
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "No autorizado"}), 401
+        
     v = Vehiculo.query.get_or_404(id)
     data = request.json
     v.marca = data.get('marca', v.marca)
@@ -48,11 +89,16 @@ def update_vehiculo(id):
     v.categoria = data.get('categoria', v.categoria)
     v.precio = float(data.get('precio', v.precio))
     v.estado = data.get('estado', v.estado)
+    v.imagen_url = data.get('imagen_url', v.imagen_url)
+    v.imagenes_galeria = data.get('imagenes_galeria', v.imagenes_galeria)
     db.session.commit()
     return jsonify({"message": "Vehículo actualizado", "vehiculo": v.to_dict()})
 
 @api_bp.route('/vehiculos/<int:id>', methods=['DELETE'])
 def delete_vehiculo(id):
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "No autorizado"}), 401
+        
     v = Vehiculo.query.get_or_404(id)
     db.session.delete(v)
     db.session.commit()

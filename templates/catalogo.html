@@ -20,4 +20,22 @@
 <div class="grid-vehiculos" id="catalogoVehiculos">
     <!-- Carga dinámica vía JS -->
 </div>
+
+<!-- MODAL VISOR DE GALERÍA DE FOTOS (LIGHTBOX) -->
+<div id="modalGaleria" class="modal-galeria" role="dialog" aria-modal="true" aria-label="Visor de imágenes del vehículo">
+    <button class="btn-cerrar-modal" onclick="cerrarGaleria()" aria-label="Cerrar visor">&times;</button>
+    
+    <button class="btn-nav-galeria btn-prev" onclick="cambiarFoto(-1)" aria-label="Imagen anterior">&#10094;</button>
+    
+    <div class="modal-contenido-img">
+        <img id="imgModalPrincipal" src="" alt="Foto de vehículo">
+        <div id="contadorFotos" class="contador-fotos">1 / 1</div>
+    </div>
+    
+    <button class="btn-nav-galeria btn-next" onclick="cambiarFoto(1)" aria-label="Imagen siguiente">&#10095;</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}

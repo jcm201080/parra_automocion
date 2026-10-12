@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}Parra Automoción - Vehículos de Ocasión y 4x4{% endblock %}
+{% block title %}Parra Automoción - Vehículos de Ocasión y Taller Especialista 4x4{% endblock %}
 
 {% block content %}
-<div class="hero-banner">
-    <h1>Especialistas en 4x4 y Vehículos de Ocasión</h1>
-    <p>Encuentra tu próximo coche garantizado o revisa tu vehículo en nuestro taller especializado.</p>
-</div>
+<!-- Sección Hero con Logo Central -->
+<section class="hero-home">
+    <div class="hero-content">
+        <img src="{{ url_for('static', filename='img/logo.jpeg') }}" alt="Parra Automoción Logo" class="hero-logo">
+        <h1 class="hero-title">PARRA <span>AUTOMOCIÓN</span></h1>
+        <p class="hero-subtitle">Venta de Vehículos de Ocasión & Taller Especialista en Preparaciones 4x4</p>
+        
+        <div class="hero-actions">
+            <a href="/catalogo" class="btn-parra btn-hero">Ver Catálogo de Vehículos</a>
+            <a href="/taller" class="btn-secondary btn-hero">Servicios de Taller 4x4</a>
+        </div>
+    </div>
+</section>
 
-<div class="search-box">
-    <input type="text" id="buscarMarca" placeholder="Marca o modelo (ej. Montero, Golf)...">
-    <select id="buscarCategoria">
-        <option value="todos">Todas las categorías</option>
-        <option value="4x4">4x4 y Todoterreno</option>
-        <option value="Turismo">Turismos</option>
-        <option value="Ocasion">Ocasión General</option>
-    </select>
-    <input type="number" id="buscarPrecioMax" placeholder="Precio Máximo (€)">
-    <button class="btn-parra" onclick="cargarVehiculos()">Buscar Coche</button>
-</div>
 
+
+<!-- Vehículos Destacados -->
+<h2 class="section-title">Vehículos en Destacado</h2>
 <main class="grid-vehiculos" id="catalogoVehiculos">
-    <!-- Los coches cargados desde la BD se insertan aquí vía JS -->
+    <!-- Carga dinámica vía JS -->
 </main>
 {% endblock %}
