@@ -161,6 +161,11 @@ function prepararEdicion(v) {
 
     document.getElementById("formTitulo").innerText = "Editar Vehículo";
     document.getElementById("btnGuardar").innerText = "Actualizar Vehículo";
+    // --- MEJORA UX MÓVIL: Desplazamiento automático al formulario ---
+    const formElement = document.getElementById("adminFormCard") || document.getElementById("formVehiculo");
+    if (formElement) {
+        formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 }
 
 async function guardarVehiculo(e) {
