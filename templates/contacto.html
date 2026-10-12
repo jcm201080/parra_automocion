@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto - Parra Automoción{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Contacto y Ubicación</h1>
+
+<div class="contacto-grid">
+    <!-- Información de Contacto -->
+    <div class="contacto-info-card">
+        <h2>Parra Automoción</h2>
+        <p class="atencion-personal"><strong>Contacto:</strong> José Ángel Castaño Martín</p>
+        
+        <div class="info-item">
+            <span class="icon">📍</span>
+            <div>
+                <strong>Dirección:</strong>
+                <p>Camino Valdelajara s/n<br>06260 Fuentes de León (Badajoz)</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="icon">📞</span>
+            <div>
+                <strong>Teléfono de Atención / WhatsApp:</strong>
+                <p><a href="tel:633360170" class="phone-link">633 36 01 70</a></p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="icon">⏰</span>
+            <div>
+                <strong>Horario de Taller y Exposición:</strong>
+                <p>Lunes a Viernes: 08:00 - 14:00 | 16:00 - 20:00<br>Sábados: Bajo cita previa</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Consulta Directa -->
+    <div class="contacto-form-card">
+        <h2>Envíanos un Mensaje</h2>
+        <form action="#" method="POST" onsubmit="alert('Mensaje enviado. Te responderemos lo antes posible.'); return false;">
+            <div class="form-group">
+                <label for="nombre">Nombre y Apellidos</label>
+                <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono de contacto</label>
+                <input type="tel" id="telefono" required placeholder="Ej. 600 000 000">
+            </div>
+            <div class="form-group">
+                <label for="asunto">Asunto</label>
+                <select id="asunto">
+                    <option value="compra">Consulta sobre compra de vehículo / 4x4</option>
+                    <option value="taller">Cita de taller / Reparación</option>
+                    <option value="preparacion">Preparación Offroad / Homologación</option>
+                    <option value="otro">Otra consulta</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" rows="4" required placeholder="Cuéntanos en qué podemos ayudarte..."></textarea>
+            </div>
+            <button type="submit" class="btn-parra btn-block">Enviar Consulta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

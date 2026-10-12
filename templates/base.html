@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Parra Automoción - Venta de Vehículos y Taller 4x4{% endblock %}</title>
+    <!-- Icono en la pestaña del navegador -->
+    <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='img/logo.jpeg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <header>
+        <a href="/" class="brand-logo-link">
+            <img src="{{ url_for('static', filename='img/logo.jpeg') }}" alt="Parra Automoción Logo" class="header-logo">
+            <div class="logo-title">PARRA <span>AUTOMOCIÓN</span></div>
+        </a>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/catalogo">Vehículos</a>
+            <a href="/catalogo?cat=4x4">4x4 / Todoterreno</a>
+            <a href="/catalogo?cat=Turismo">Turismos</a>
+            <a href="/taller">Taller Mecánico</a>
+            <a href="/contacto">Contacto</a>
+            <a href="/admin" class="btn-admin-nav">Panel Admin</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Parra Automoción — Fuentes de León (Badajoz). Especialistas en 4x4 y Multimarca.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

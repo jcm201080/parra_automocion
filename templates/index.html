@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Parra Automoción - Vehículos de Ocasión y 4x4{% endblock %}
+
+{% block content %}
+<div class="hero-banner">
+    <h1>Especialistas en 4x4 y Vehículos de Ocasión</h1>
+    <p>Encuentra tu próximo coche garantizado o revisa tu vehículo en nuestro taller especializado.</p>
+</div>
+
+<div class="search-box">
+    <input type="text" id="buscarMarca" placeholder="Marca o modelo (ej. Montero, Golf)...">
+    <select id="buscarCategoria">
+        <option value="todos">Todas las categorías</option>
+        <option value="4x4">4x4 y Todoterreno</option>
+        <option value="Turismo">Turismos</option>
+        <option value="Ocasion">Ocasión General</option>
+    </select>
+    <input type="number" id="buscarPrecioMax" placeholder="Precio Máximo (€)">
+    <button class="btn-parra" onclick="cargarVehiculos()">Buscar Coche</button>
+</div>
+
+<main class="grid-vehiculos" id="catalogoVehiculos">
+    <!-- Los coches cargados desde la BD se insertan aquí vía JS -->
+</main>
+{% endblock %}

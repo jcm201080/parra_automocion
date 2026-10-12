@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo de Vehículos - Parra Automoción{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Catálogo de Vehículos</h1>
+
+<div class="search-box">
+    <input type="text" id="buscarMarca" placeholder="Marca o modelo (ej. Montero, Golf)...">
+    <select id="buscarCategoria">
+        <option value="todos" {% if categoria_inicial == 'todos' %}selected{% endif %}>Todas las categorías</option>
+        <option value="4x4" {% if categoria_inicial == '4x4' %}selected{% endif %}>4x4 y Todoterreno</option>
+        <option value="Turismo" {% if categoria_inicial == 'Turismo' %}selected{% endif %}>Turismos</option>
+        <option value="Ocasion" {% if categoria_inicial == 'Ocasion' %}selected{% endif %}>Ocasión General</option>
+    </select>
+    <input type="number" id="buscarPrecioMax" placeholder="Precio Máximo (€)">
+    <button class="btn-parra" onclick="cargarVehiculos()">Buscar Coche</button>
+</div>
+
+<div class="grid-vehiculos" id="catalogoVehiculos">
+    <!-- Carga dinámica vía JS -->
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Administración - Parra Automoción{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Gestión de Inventario (Admin)</h1>
+
+<div class="admin-grid">
+    <!-- Formulario para añadir vehículo -->
+    <div class="admin-form-card">
+        <h2>Añadir / Editar Vehículo</h2>
+        <form id="formVehiculo" onsubmit="guardarVehiculo(event)">
+            <input type="hidden" id="vehiculoId">
+            <input type="text" id="marca" placeholder="Marca (ej. Mitsubishi)" required>
+            <input type="text" id="modelo" placeholder="Modelo (ej. Montero V40)" required>
+            <select id="categoria" required>
+                <option value="4x4">4x4 y Todoterreno</option>
+                <option value="Turismo">Turismo</option>
+                <option value="Ocasion">Ocasión</option>
+            </select>
+            <input type="number" id="precio" placeholder="Precio (€)" required>
+            <input type="number" id="anio" placeholder="Año" required>
+            <input type="number" id="kilometros" placeholder="Kilómetros" required>
+            <select id="combustible" required>
+                <option value="Diésel">Diésel</option>
+                <option value="Gasolina">Gasolina</option>
+                <option value="Híbrido">Híbrido</option>
+            </select>
+            <select id="estado" required>
+                <option value="disponible">Disponible</option>
+                <option value="reservado">Reservado</option>
+                <option value="vendido">Vendido</option>
+            </select>
+            <input type="url" id="imagen_url" placeholder="URL de la imagen (o dejar en blanco)">
+            <textarea id="descripcion" placeholder="Descripción breve del estado, accesorios..." rows="3"></textarea>
+            
+            <button type="submit" class="btn-parra">Guardar Vehículo</button>
+        </form>
+    </div>
+
+    <!-- Tabla de inventario existente -->
+    <div class="admin-table-card">
+        <h2>Stock Actual</h2>
+        <table class="tabla-admin">
+            <thead>
+                <tr>
+                    <th>Vehículo</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaAdminBody">
+                <!-- Se rellena vía JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
