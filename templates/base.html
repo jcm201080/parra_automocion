@@ -16,13 +16,32 @@
             <div class="logo-title">PARRA <span>AUTOMOCIÓN</span></div>
         </a>
         <nav>
-            <a href="/">Inicio</a>
-            <a href="/catalogo">Vehículos</a>
-            <a href="/catalogo?cat=4x4">4x4 / Todoterreno</a>
-            <a href="/catalogo?cat=Turismo">Turismos</a>
-            <a href="/taller">Taller Mecánico</a>
-            <a href="/contacto">Contacto</a>
-            <a href="/admin" class="btn-admin-nav">Panel Admin</a>
+            <a href="/" 
+               class="{% if request.endpoint == 'web.index' %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.index' %}aria-current="page"{% endif %}>Inicio</a>
+            
+            <a href="/catalogo" 
+               class="{% if request.endpoint == 'web.catalogo' and not request.args.get('cat') %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.catalogo' and not request.args.get('cat') %}aria-current="page"{% endif %}>Vehículos</a>
+            
+            <a href="/catalogo?cat=4x4" 
+               class="{% if request.endpoint == 'web.catalogo' and request.args.get('cat') == '4x4' %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.catalogo' and request.args.get('cat') == '4x4' %}aria-current="page"{% endif %}>4x4 / Todoterreno</a>
+            
+            <a href="/catalogo?cat=Turismo" 
+               class="{% if request.endpoint == 'web.catalogo' and request.args.get('cat') == 'Turismo' %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.catalogo' and request.args.get('cat') == 'Turismo' %}aria-current="page"{% endif %}>Turismos</a>
+            
+            <a href="/taller" 
+               class="{% if request.endpoint == 'web.taller' %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.taller' %}aria-current="page"{% endif %}>Taller Mecánico</a>
+            
+            <a href="/contacto" 
+               class="{% if request.endpoint == 'web.contacto' %}nav-active{% endif %}"
+               {% if request.endpoint == 'web.contacto' %}aria-current="page"{% endif %}>Contacto</a>
+            
+            <a href="/admin" 
+               class="btn-admin-nav {% if request.endpoint == 'web.admin' %}nav-active-admin{% endif %}">Panel Admin</a>
         </nav>
     </header>
 

@@ -9,9 +9,9 @@
 </div>
 
 <div class="admin-grid">
-    <!-- Formulario para añadir vehículo con cámara móvil -->
+    <!-- Formulario para añadir / modificar vehículo -->
     <div class="admin-form-card">
-        <h2>Añadir Vehículo</h2>
+        <h2 id="formTitulo">Añadir Vehículo</h2>
         <form id="formVehiculo" onsubmit="guardarVehiculo(event)">
             <input type="hidden" id="vehiculoId">
             
@@ -40,7 +40,7 @@
                 <option value="vendido">Vendido</option>
             </select>
 
-            <!-- Subida de Foto Principal desde Cámara / Galería Móvil -->
+            <!-- Subida de Foto Principal -->
             <div class="upload-box">
                 <label>📸 Foto Principal (Desde Cámara o Galería):</label>
                 <input type="file" id="fotoFile" accept="image/*" capture="environment" onchange="subirFotoMovil(this)">
@@ -48,9 +48,10 @@
                 <div id="previewFoto" class="image-preview"></div>
             </div>
 
-            <textarea id="descripcion" placeholder="Descripción breve del estado, accesorios..." rows="3"></textarea>
+            <textarea id="descripcion" placeholder="Descripción breve..." rows="3"></textarea>
             
-            <button type="submit" class="btn-parra btn-block">Guardar Vehículo</button>
+            <button type="submit" id="btnGuardar" class="btn-parra btn-block">Guardar Vehículo</button>
+            <button type="button" onclick="resetFormulario()" class="btn-sm" style="margin-top: 10px; width: 100%; background: #4b5563; color: white;">Cancelar / Limpiar Formulario</button>
         </form>
     </div>
 

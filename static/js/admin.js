@@ -45,6 +45,8 @@ async function cargarTablaAdmin() {
             <td>${v.precio.toLocaleString()} €</td>
             <td><span class="badge state-${v.estado}">${v.estado.toUpperCase()}</span></td>
             <td>
+                <button onclick="prepararEdicion(${JSON.stringify(v).replace(/"/g, '&quot;')})" class="btn-sm" style="background:#2563eb; color:white;">Editar</button>
+                <button onclick="cambiarEstado(${v.id}, 'reservado')" class="btn-sm" style="background:#ca8a04; color:white;">Reservado</button>
                 <button onclick="cambiarEstado(${v.id}, 'vendido')" class="btn-sm btn-vendido">Vendido</button>
                 <button onclick="eliminarVehiculo(${v.id})" class="btn-sm btn-delete">Eliminar</button>
             </td>
@@ -53,8 +55,32 @@ async function cargarTablaAdmin() {
     });
 }
 
+// Carga los datos del vehículo en el formulario para editarlo
+function prepararEdicion(v) {
+    document.getElementById("vehiculoId").value = v.id;
+    document.getElementById("marca").value = v.marca;
+    document.getElementById("modelo").value = v.modelo;
+    document.getElementById("categoria").value = v.categoria;
+    document.getElementById("precio").value = v.precio;
+    document.getElementById("anio").value = v.anio;
+    document.getElementById("kilometros").value = v.kilometros;
+    document.getElementById("combustible").value = v.combustible;
+    document.getElementById("estado").value = v.estado;
+    document.getElementById("imagen_url").value = v.imagen_url;
+    document.getElementById("descripcion").value = v.descripcion || "";
+
+    if (v.imagen_url) {
+        document.getElementById("previewFoto").innerHTML = `<img src="${v.imagen_url}" style="max-height: 120px; border-radius: 6px; margin-top: 8px;">`;
+    }
+
+    document.getElementById("formTitulo").innerText = "Editar Vehículo";
+    document.getElementById("btnGuardar").innerText = "Actualizar Vehículo";
+}
+
 async function guardarVehiculo(e) {
     e.preventDefault();
+    const id = document.getElementById("vehiculoId").value;
+    
     const datos = {
         marca: document.getElementById("marca").value,
         modelo: document.getElementById("modelo").value,
@@ -68,19 +94,30 @@ async function guardarVehiculo(e) {
         descripcion: document.getElementById("descripcion").value
     };
 
-    const res = await fetch('/api/vehiculos', {
-        method: 'POST',
+    const method = id ? 'PUT' : 'POST';
+    const url = id ? `/api/vehiculos/${id}` : '/api/vehiculos';
+
+    const res = await fetch(url, {
+        method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
     });
 
     if (res.ok) {
-        document.getElementById("formVehiculo").reset();
-        document.getElementById("previewFoto").innerHTML = "";
+        resetFormulario();
         cargarTablaAdmin();
     } else {
-        alert("Error al guardar el vehículo. Verifica que has iniciado sesión.");
+        alert("Error al guardar el vehículo.");
     }
+}
+
+function resetFormulario() {
+    document.getElementById("formVehiculo").reset();
+    document.getElementById("vehiculoId").value = "";
+    document.getElementById("imagen_url").value = "";
+    document.getElementById("previewFoto").innerHTML = "";
+    document.getElementById("formTitulo").innerText = "Añadir Vehículo";
+    document.getElementById("btnGuardar").innerText = "Guardar Vehículo";
 }
 
 async function cambiarEstado(id, nuevoEstado) {
@@ -93,7 +130,7 @@ async function cambiarEstado(id, nuevoEstado) {
 }
 
 async function eliminarVehiculo(id) {
-    if (confirm("¿Seguro que deseas eliminar este vehículo?")) {
+    if (confirm("¿Seguro que deseas eliminar este vehículo del inventario?")) {
         await fetch(`/api/vehiculos/${id}`, { method: 'DELETE' });
         cargarTablaAdmin();
     }

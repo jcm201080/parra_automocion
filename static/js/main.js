@@ -59,10 +59,18 @@ async function cargarVehiculos() {
                 fotos = fotos.concat(v.imagenes_galeria);
             }
 
+            // --- LÓGICA PARA MOSTRAR VENDIDO Y RESERVADO ---
+            let badgeEstadoHtml = '';
+            if (v.estado === 'vendido') {
+                badgeEstadoHtml = '<span class="badge-estado badge-vendido">VENDIDO</span>';
+            } else if (v.estado === 'reservado') {
+                badgeEstadoHtml = '<span class="badge-estado badge-reservado">RESERVADO</span>';
+            }
+
             const card = document.createElement("div");
             card.className = "card-vehiculo";
             card.innerHTML = `
-                ${v.estado === 'vendido' ? '<span class="badge-vendido">VENDIDO</span>' : ''}
+                ${badgeEstadoHtml}
                 <div class="card-img-wrapper" onclick='abrirGaleria(${JSON.stringify(fotos)})'>
                     <img src="${v.imagen_url}" alt="${v.marca} ${v.modelo}" loading="lazy">
                     <span class="badge-fotos-count">📷 ${fotos.length} ${fotos.length === 1 ? 'foto' : 'fotos'}</span>
