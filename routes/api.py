@@ -103,3 +103,30 @@ def delete_vehiculo(id):
     db.session.delete(v)
     db.session.commit()
     return jsonify({"message": "Vehículo eliminado"})
+
+@api_bp.route('/upload-multiple', methods=['POST'])
+def upload_multiple():
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "No autorizado"}), 401
+        
+    if 'fotos' not in request.files:
+        return jsonify({"error": "No se han recibido archivos"}), 400
+        
+    files = request.files.getlist('fotos')
+    saved_urls = []
+    
+    upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+    os.makedirs(upload_folder, exist_ok=True)
+    
+    for file in files:
+        if file and file.filename != '' and allowed_file(file.filename):
+            ext = file.filename.rsplit('.', 1)[1].lower()
+            filename = f"{uuid.uuid4().hex}.{ext}"
+            file_path = os.path.join(upload_folder, filename)
+            file.save(file_path)
+            saved_urls.append(f"/static/uploads/{filename}")
+            
+    if saved_urls:
+        return jsonify({"urls": saved_urls}), 200
+        
+    return jsonify({"error": "Formato de archivo no permitido"}), 400

@@ -255,6 +255,12 @@ footer {
     background-color: #ca8a04; /* Ámbar / Amarillo */
 }
 
+.image-preview-grid {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+}
 /* --- ESTILOS DEL PANEL ADMIN --- */
 .admin-grid {
     display: grid;

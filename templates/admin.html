@@ -14,44 +14,47 @@
         <h2 id="formTitulo">Añadir Vehículo</h2>
         <form id="formVehiculo" onsubmit="guardarVehiculo(event)">
             <input type="hidden" id="vehiculoId">
-            
+
             <input type="text" id="marca" placeholder="Marca (ej. Mitsubishi)" required>
             <input type="text" id="modelo" placeholder="Modelo (ej. Montero V40)" required>
-            
+
             <select id="categoria" required>
                 <option value="4x4">4x4 y Todoterreno</option>
                 <option value="Turismo">Turismo</option>
                 <option value="Ocasion">Ocasión</option>
             </select>
-            
+
             <input type="number" id="precio" placeholder="Precio (€)" required>
             <input type="number" id="anio" placeholder="Año" required>
             <input type="number" id="kilometros" placeholder="Kilómetros" required>
-            
+
             <select id="combustible" required>
                 <option value="Diésel">Diésel</option>
                 <option value="Gasolina">Gasolina</option>
                 <option value="Híbrido">Híbrido</option>
             </select>
-            
+
             <select id="estado" required>
                 <option value="disponible">Disponible</option>
                 <option value="reservado">Reservado</option>
                 <option value="vendido">Vendido</option>
             </select>
 
-            <!-- Subida de Foto Principal -->
+            <!-- Subida de Fotos (Principal + Galería) -->
             <div class="upload-box">
-                <label>📸 Foto Principal (Desde Cámara o Galería):</label>
-                <input type="file" id="fotoFile" accept="image/*" onchange="subirFotoMovil(this)">
+                <label>📸 Fotos del Vehículo (La 1ª será la portada principal; el resto la galería):</label>
+                <input type="file" id="fotoFile" accept="image/*" multiple onchange="subirFotosMovil(this)">
                 <input type="hidden" id="imagen_url">
-                <div id="previewFoto" class="image-preview"></div>
+                <input type="hidden" id="imagenes_galeria">
+                <div id="previewFoto" class="image-preview-grid"></div>
             </div>
 
             <textarea id="descripcion" placeholder="Descripción breve..." rows="3"></textarea>
-            
+
             <button type="submit" id="btnGuardar" class="btn-parra btn-block">Guardar Vehículo</button>
-            <button type="button" onclick="resetFormulario()" class="btn-sm" style="margin-top: 10px; width: 100%; background: #4b5563; color: white;">Cancelar / Limpiar Formulario</button>
+            <button type="button" onclick="resetFormulario()" class="btn-sm"
+                style="margin-top: 10px; width: 100%; background: #4b5563; color: white;">Cancelar / Limpiar
+                Formulario</button>
         </form>
     </div>
 
